@@ -1,0 +1,11 @@
+com\dovecry\graphdb\model\Song.class
+com\dovecry\graphdb\model\Track.class
+com\dovecry\spring\RootConfig.class
+com\dovecry\graphdb\data\IUserRepository.class
+com\dovecry\graphdb\model\User.class
+com\dovecry\web\WebConfig.class
+com\dovecry\spring\GraphDbConfiguration.class
+com\dovecry\spring\DovecryWebInitializer.class
+com\dovecry\web\UserController.class
+com\dovecry\spring\RootConfig$WebPackage.class
+com\dovecry\web\HomeController.class
