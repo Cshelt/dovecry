@@ -1,6 +1,5 @@
 package com.dovecry.graphdb.model;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.neo4j.ogm.annotation.GraphId;
@@ -10,18 +9,19 @@ import org.springframework.stereotype.Component;
 
 @Component
 @NodeEntity
-public class User implements Serializable{
-	private static final long serialVersionUID = 5026351515172046778L;
+public class ModelUser{
 	@GraphId
 	private Long userid;
 	private String username;
-	private String email;
 	private String password;
+	private String email;
+	private String role;
 	
-	@Relationship(type="CREATED",direction=Relationship.UNDIRECTED)
-	private ArrayList<Song> songs = new ArrayList<Song>();
+	@Relationship(type="CREATES", direction=Relationship.UNDIRECTED)
+	private ArrayList<ModelSong> songs = new ArrayList<ModelSong>();
+
 	
-	public User() {};
+	public ModelUser() {};
 	
 	public Long getUserid() {
 		return userid;
@@ -35,13 +35,6 @@ public class User implements Serializable{
 		this.username = username;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
 
 	public String getPassword() {
 		return password;
@@ -50,13 +43,31 @@ public class User implements Serializable{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-	public ArrayList<Song> getSongs() {
-		return songs;
+	
+	public String getEmail() {
+		return this.email;
 	}
 
-	public void setSongs(ArrayList<Song> songs) {
-		this.songs = songs;
+	public void setEmail(String email) {
+		this.email=email;
+		
 	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public void setSongs(ArrayList<ModelSong> songs) {
+		this.songs=songs;		
+	}
+	
+	public ArrayList<ModelSong> getSongs(){
+		return this.songs;
+	}
+
 
 }

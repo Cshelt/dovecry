@@ -5,11 +5,11 @@ import java.util.List;
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.GraphRepository;
 
-import com.dovecry.graphdb.model.User;
+import com.dovecry.graphdb.model.ModelUser;
 
-public interface IUserRepository extends GraphRepository<User>{
-	@Query("MATCH (n:User) RETURN n.username")
+public interface IUserRepository extends GraphRepository<ModelUser>{
+	@Query("MATCH (n:ModelUser) RETURN n.username")
 	public List<String> getAllUserNames();
 
-	public User findByUsername(String username);
+	public ModelUser findByUsername(String username);
 }

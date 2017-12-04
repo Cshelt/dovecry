@@ -4,7 +4,7 @@ import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.NodeEntity;
 
 @NodeEntity
-public class Track {
+public class ModelTrack {
 	@GraphId
 	private Long trackid;
 	private String trackname;

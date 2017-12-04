@@ -1,49 +1,56 @@
 package com.dovecry.web;
 
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.dovecry.graphdb.data.IUserRepository;
-import com.dovecry.graphdb.model.User;
+import com.dovecry.graphdb.model.ModelUser;
+import com.dovecry.security.RequestVerifier;
 
-@Controller
-@RequestMapping("/user")
+@RestController
+@RequestMapping("/users")
 public class UserController {
 	  @Autowired 
-	  User user;
-	  
-	  private IUserRepository userRepository;
+	  ModelUser user;
 	  
 	  @Autowired
-	  public UserController(IUserRepository userRepository) {
-	    this.userRepository = userRepository;
+	  RequestVerifier requestVerifier;
+	  
+	  private IUserRepository userRepository;
+	  private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+	    public UserController(IUserRepository applicationUserRepository,
+	                          BCryptPasswordEncoder bCryptPasswordEncoder) {
+	        this.userRepository = applicationUserRepository;
+	        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+	    }
+	  @GetMapping
+	  public @ResponseBody java.util.List<String> GetAllUsers() {
+		  return userRepository.getAllUserNames();
+	  }
+	  @PostMapping("/register")
+	  public void register(@RequestBody ModelUser user) {
+		  user.setRole(user.getUsername());
+		  user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+		  userRepository.save(user);
 	  }
 	  
-	  @RequestMapping(value="/users",method=GET)
-		  public @ResponseBody Iterable<String> getAllUsers() {
-		  	return userRepository.getAllUserNames();
-	  	}
-	  
-	  @RequestMapping(value="/register", method=GET)
-	  public String addUser() {
-		return "register";
+	  @GetMapping("/{username}")
+	  public @ResponseBody String getUserInfo(@PathVariable String username,
+			  HttpServletRequest httpServletRequest) {
+		  if(requestVerifier.verifyRequest(httpServletRequest,username)) {
+			  return "You're in";
+		  }
+		  return "You're out!";
 	  }
-	  
-	  @RequestMapping(value="/register", method=POST)
-	  public String addUser(User user) {
-		userRepository.save(user);
-		return "redirect:/user/"+user.getUsername();
-	  }
-	  
-	  @RequestMapping(value="/{username}",method=GET)
-	  public String showUserProfile(@PathVariable String username) {
-		  //User user = userRepository.findByUsername(username);
-		  return "userconfirmation";
-	  }
+  
 }

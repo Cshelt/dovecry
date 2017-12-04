@@ -7,7 +7,7 @@ import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 
 @NodeEntity
-public class Song {
+public class ModelSong {
 	@GraphId
 	private Long songid;
 	private String songname;
@@ -15,9 +15,9 @@ public class Song {
 	private Boolean needsTracks;
 	
 	@Relationship(type="CONTAINS", direction=Relationship.UNDIRECTED)
-	private ArrayList<Track> tracks = new ArrayList<Track>();
+	private ArrayList<ModelTrack> tracks = new ArrayList<ModelTrack>();
 	
-	public Song() {};
+	public ModelSong() {};
 
 	public Long getSongid() {
 		return songid;
@@ -39,11 +39,11 @@ public class Song {
 		this.songlocation = songlocation;
 	}
 
-	public ArrayList<Track> getTracks() {
+	public ArrayList<ModelTrack> getTracks() {
 		return tracks;
 	}
 
-	public void setTracks(ArrayList<Track> tracks) {
+	public void setTracks(ArrayList<ModelTrack> tracks) {
 		this.tracks = tracks;
 	}
 

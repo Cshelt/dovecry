@@ -9,7 +9,7 @@ import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.type.filter.RegexPatternTypeFilter;
 
-import com.dovecry.spring.RootConfig.WebPackage;;
+import com.dovecry.spring.RootConfiguration.WebPackage;;
 
 @Configuration
 @Import({GraphDbConfiguration.class})
@@ -17,7 +17,7 @@ import com.dovecry.spring.RootConfig.WebPackage;;
     excludeFilters={
         @Filter(type=FilterType.CUSTOM, value=WebPackage.class)
     })
-public class RootConfig {
+public class RootConfiguration {
   public static class WebPackage extends RegexPatternTypeFilter {
     public WebPackage() {
       super(Pattern.compile("com.dovecry\\.web"));

@@ -1,4 +1,4 @@
-package com.dovecry.graphdb;
+/*package com.dovecry.graphdb;
 
 import static org.junit.Assert.assertEquals;
 
@@ -10,10 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.neo4j.ogm.session.Session;
 import org.neo4j.ogm.session.SessionFactory;
-import org.neo4j.ogm.transaction.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.neo4j.transaction.Neo4jTransactionManager;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
@@ -32,12 +29,7 @@ public class Neo4JRepositoryTest {
 	private SessionFactory sessionFactory;
 	
 	@Autowired
-	private Neo4jTransactionManager transactionManager;
-	
-	@Autowired
 	private ISongRepository songRepository;
-	
-	private Transaction transaction;
 	
 	private Session session;
 	
@@ -57,6 +49,27 @@ public class Neo4JRepositoryTest {
     	session.deleteAll(User.class);
     	session.deleteAll(Song.class);
     	session.deleteAll(Track.class);
+    	User adminUser = new User();
+    	adminUser.setUsername("cshelton");
+    	adminUser.setEmail("cshelton@email.com");
+    	adminUser.setPassword("csheltonpw");
+    	adminUser.setRole("ROLE_ADMIN");
+    	Song song = new Song();
+    	song.setSongname("Lonely Joe");
+    	song.setSonglocation("/user/cshelton/songs/LonelyJoe");
+    	song.setNeedsTracks(true);
+    	Track t1 = new Track();
+    	t1.setTrackname("Guitar");
+    	t1.setTracklocation(song.getSonglocation()+"/"+t1.getTrackname());
+    	t1.setTracktype(Track.TrackType.GUITAR);
+    	ArrayList<Track> tracks =new ArrayList<Track>();
+    	tracks.add(t1);
+    	
+    	song.setTracks(tracks);
+    	ArrayList<Song> songs = new ArrayList<Song>();
+    	songs.add(song);
+    	adminUser.setSongs(songs);
+    	session.save(adminUser);
     	SetupUsers setupUsers = new SetupUsers();
     	ArrayList<User> users = setupUsers.createUsers();
     	for(int i=0;i<users.size();i++) {
@@ -72,6 +85,26 @@ public class Neo4JRepositoryTest {
     	session.deleteAll(User.class);
     	session.deleteAll(Song.class);
     	session.deleteAll(Track.class);
+    	User adminUser = new User();
+    	adminUser.setUsername("cshelton");
+    	adminUser.setEmail("cshelton@email.com");
+    	adminUser.setPassword("csheltonpw");
+    	adminUser.setRole("ROLE_ADMIN");
+    	Song song = new Song();
+    	song.setSongname("Lonely Joe");
+    	song.setSonglocation("/user/cshelton/songs/LonelyJoe");
+    	song.setNeedsTracks(true);
+    	Track t1 = new Track();
+    	t1.setTrackname("Guitar");
+    	t1.setTracklocation(song.getSonglocation()+"/"+t1.getTrackname());
+    	t1.setTracktype(Track.TrackType.GUITAR);
+    	ArrayList<Track> tracks =new ArrayList<Track>();
+    	tracks.add(t1);
+    	song.setTracks(tracks);
+    	ArrayList<Song> songs = new ArrayList<Song>();
+    	songs.add(song);
+    	adminUser.setSongs(songs);
+    	session.save(adminUser);
     	SetupUsers setupUsers = new SetupUsers();
     	ArrayList<User> users = setupUsers.createUsers();
     	for(int i=0;i<users.size();i++) {
@@ -79,13 +112,14 @@ public class Neo4JRepositoryTest {
     	}
     	session.getTransaction().commit();
     	String username = "username-2";
-    	ArrayList<Song> songs = songRepository.getSongsByUserName(username);
-    	System.out.println(songs.get(0).getSongname().substring(0, username.length()));
-    	assertEquals(username,(songs.get(0).getSongname().substring(0, username.length())));
-    	for(Song s: songs) {
+    	ArrayList<Song> songs1 = songRepository.getSongsByUserName(username);
+    	System.out.println(songs1.get(0).getSongname().substring(0, username.length()));
+    	assertEquals(username,(songs1.get(0).getSongname().substring(0, username.length())));
+    	for(Song s: songs1) {
     		System.out.println(s.getSongname());
     	}
     	after();
     }
     
 }
+*/
