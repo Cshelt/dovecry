@@ -47,7 +47,7 @@ public class UserController {
 	  @GetMapping("/{username}")
 	  public @ResponseBody String getUserInfo(@PathVariable String username,
 			  HttpServletRequest httpServletRequest) {
-		  if(requestVerifier.verifyRequest(httpServletRequest,username)) {
+		  if(requestVerifier.verifyUserForResource(httpServletRequest,username)) {
 			  return "You're in";
 		  }
 		  return "You're out!";

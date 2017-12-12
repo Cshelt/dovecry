@@ -18,3 +18,4 @@ com\dovecry\graphdb\model\ModelSong.class
 com\dovecry\graphdb\data\ITrackRepository.class
 com\dovecry\security\SecurityAuthenticationFilter.class
 com\dovecry\graphdb\model\ModelTrack$TrackType.class
+com\dovecry\web\SongController.class

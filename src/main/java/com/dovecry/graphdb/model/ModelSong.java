@@ -5,19 +5,21 @@ import java.util.ArrayList;
 import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
+import org.springframework.stereotype.Component;
 
+@Component
 @NodeEntity
 public class ModelSong {
 	@GraphId
 	private Long songid;
 	private String songname;
 	private String songlocation;
-	private Boolean needsTracks;
+	private Boolean needstracks;
 	
 	@Relationship(type="CONTAINS", direction=Relationship.UNDIRECTED)
 	private ArrayList<ModelTrack> tracks = new ArrayList<ModelTrack>();
 	
-	public ModelSong() {};
+	public ModelSong() {}
 
 	public Long getSongid() {
 		return songid;
@@ -39,19 +41,14 @@ public class ModelSong {
 		this.songlocation = songlocation;
 	}
 
-	public ArrayList<ModelTrack> getTracks() {
-		return tracks;
+	public Boolean getNeedstracks() {
+		return needstracks;
 	}
 
-	public void setTracks(ArrayList<ModelTrack> tracks) {
-		this.tracks = tracks;
+	public void setNeedstracks(Boolean needstracks) {
+		this.needstracks = needstracks;
 	}
 
-	public Boolean getNeedsTracks() {
-		return needsTracks;
-	}
 
-	public void setNeedsTracks(Boolean needsTracks) {
-		this.needsTracks = needsTracks;
-	}
+
 }

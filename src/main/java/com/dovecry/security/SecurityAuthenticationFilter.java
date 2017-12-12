@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -23,16 +25,22 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@PropertySource("classpath:security.properties")
 public class SecurityAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
-    public static final String SECRETSTRING = "SecretKeyToGenJWTs";
-    public static final long EXPIRATIONTIME = 864_000_000;
-    public static final String TOKENPREFIX = "Bearer ";
-    public static final String HEADERSTRING = "Authorization";
+	@Value("${jwt.secret}")
+    public String SECRETSTRING;
+	@Value("${jwt.expiration}")
+	public String EXPIRATIONTIMESTRING;
+	@Value("${jwt.tokenprefix}")
+    public String TOKENPREFIX;
+	@Value("${jwt.headerstring}")
+    public String HEADERSTRING;
 
     private AuthenticationManager authenticationManager;
 
     public SecurityAuthenticationFilter(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
+        setFilterProcessesUrl("/users/login");
     }
 
     @Override
@@ -61,7 +69,7 @@ public class SecurityAuthenticationFilter extends UsernamePasswordAuthentication
                                             Authentication auth) throws IOException, ServletException {
         String token = Jwts.builder()
                 .setSubject(((User) auth.getPrincipal()).getUsername())
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATIONTIME))
+                .setExpiration(new Date(System.currentTimeMillis() + Long.parseLong(EXPIRATIONTIMESTRING)))
                 .signWith(SignatureAlgorithm.HS512, SECRETSTRING.getBytes())
                 .compact();
         res.addHeader(HEADERSTRING, TOKENPREFIX + token);

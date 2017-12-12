@@ -31,7 +31,6 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
   
   @Bean
   public BCryptPasswordEncoder bCryptPasswordEncoder() {
-		System.out.println("inside of BCrpytPasswordEncode()");
       return new BCryptPasswordEncoder();
   }
   

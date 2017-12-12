@@ -73,9 +73,8 @@ public class SetupUsers {
     		for(int j=0;j<5;j++) {
     			ModelSong song = new ModelSong();
     			song.setSongname(user.getUsername()+"_SongName"+j);
-    			song.setSonglocation("/user/song/users/"+user.getUsername()+"/"+song.getSongname());
-    			song.setNeedsTracks(j%2==0?true:false);
-    			song.setTracks(setUpTracks(j,song));
+    			song.setSonglocation("/user/song/users/"+user.getUsername()+"/"+song.getSongid());
+    			song.setNeedstracks(j%2==0?true:false);
         		songs.add(song);
     		}
     		user.setSongs(songs);

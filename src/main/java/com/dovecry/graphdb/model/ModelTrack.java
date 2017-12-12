@@ -2,7 +2,9 @@ package com.dovecry.graphdb.model;
 
 import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.NodeEntity;
+import org.springframework.stereotype.Component;
 
+@Component
 @NodeEntity
 public class ModelTrack {
 	@GraphId
